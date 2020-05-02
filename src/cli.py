@@ -1,21 +1,30 @@
 import sys
+import re
 
 arguments_map = {}
 
-def process_arguments():
+def process_arguments(raw_arguments: list):
   """
-  Process the arguments from CLI
+  Process the arguments from CLI. The value of sys.argv
   """
   arguments = {}
-  for item in sys.argv:
-    chunks = item.split('=')
+  for argument in raw_arguments:
+    matches = re.search(r'^(.+?)=[\'"]?(.+?)[\'"]?$', argument)
 
-    if len(chunks) == 2:
-      chunks[0] = chunks[0].lower()
+    if matches:
+      arg = matches.group(1).lower()
+      value = matches.group(2)
+
       arguments.update({
-        chunks[0]: chunks[1]
+        arg: value
       })
   return arguments
+
+def get_arguments():
+  """
+  Returns the Arguments Map values
+  """
+  return arguments_map
 
 def get_argument(name: str):
   """
@@ -28,4 +37,4 @@ def get_argument(name: str):
 
 if len(arguments_map) == 0:
   # process the arguments and populates the Dict arguments_map
-  arguments_map = process_arguments()
+  arguments_map = process_arguments(sys.argv[1:])
