@@ -4,6 +4,8 @@ def get_list_dir(path: str):
   """
   Returs a list of file name from the rirectory passed by parameter
   """
+  if is_directory(path) == False:
+    return []
   return list(map(lambda item: add_end_slash(path) + item, os.listdir(path)))
 
 def add_end_slash(value: str):
