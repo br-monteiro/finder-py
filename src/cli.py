@@ -9,7 +9,8 @@ def process_arguments(raw_arguments: list):
   """
   arguments = {}
   for argument in raw_arguments:
-    matches = re.search(r'^(.+?)=[\'"]?(.+?)[\'"]?$', argument)
+    # catch the arguments with associated values
+    matches = re.search(r'^([a-z][a-z0-9-]+?)=[\'"]?(.+?)[\'"]?$', argument)
 
     if matches:
       arg = matches.group(1).lower()
@@ -17,6 +18,15 @@ def process_arguments(raw_arguments: list):
 
       arguments.update({
         arg: value
+      })
+      continue
+
+    # catch the simple arguments
+    matches = re.search(r'^(-[a-z][a-z0-9-]+?)$', argument)
+    if matches:
+      arg = matches.group(1)
+      arguments.update({
+        arg: True
       })
   return arguments
 
@@ -31,9 +41,7 @@ def get_argument(name: str):
   Returns one argument from CLI by name
   If there is no argument, returns None
   """
-  if name in arguments_map:
-    return arguments_map[name]
-  return None
+  return arguments_map[name] if name in arguments_map else None
 
 if len(arguments_map) == 0:
   # process the arguments and populates the Dict arguments_map
