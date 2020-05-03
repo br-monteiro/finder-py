@@ -17,6 +17,10 @@ class TestDiscManager(unittest.TestCase):
       self.path + "/other-test.txt"
     ]
     self.assertEqual(expected, disc_manager.get_list_dir(self.path))
+    self.assertEqual([], disc_manager.get_list_dir(self.path + "/whatever"))
+    self.assertEqual([], disc_manager.get_list_dir(self.path + "/test.txt"))
+    self.assertEqual([], disc_manager.get_list_dir("/whatever"))
+    self.assertEqual([], disc_manager.get_list_dir(""))
 
   def test_add_slash(self):
     self.assertEqual("/", disc_manager.add_end_slash(""))
