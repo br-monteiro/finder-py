@@ -47,7 +47,7 @@ class TestDiscManager(unittest.TestCase):
     self.assertFalse(disc_manager.is_readable("/root/whatever"))
 
   def test_load_file(self):
-    expected = ["simple test\n", "second line"]
+    expected = ["simple test", "second line"]
     self.assertEqual(expected, disc_manager.load_file(self.path + "/test.txt"))
     self.assertEqual([], disc_manager.load_file("/whatever.txt"))
     self.assertEqual([], disc_manager.load_file(""))

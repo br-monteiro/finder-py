@@ -1,4 +1,5 @@
 import os
+from src.utils import normalize_str
 
 def get_list_dir(path: str):
   """
@@ -44,7 +45,7 @@ def load_file(path: str):
 
   file = open(path, "r")
   for line in file:
-    content.append(line)
+    content.append(normalize_str(line))
   file.close()
 
   return content
