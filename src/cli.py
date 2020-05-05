@@ -43,6 +43,14 @@ def get_argument(name: str):
   """
   return arguments_map[name] if name in arguments_map else None
 
+def set_argument(key, value):
+  """
+  Set a new value into 'arguments_map'
+  """
+  arguments_map.update({
+    key: value
+  })
+
 if len(arguments_map) == 0:
   # process the arguments and populates the Dict arguments_map
   arguments_map = process_arguments(sys.argv[1:])
