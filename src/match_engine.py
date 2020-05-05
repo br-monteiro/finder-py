@@ -184,5 +184,6 @@ def run():
     discoverer(regexTerm, path)
 
   else:
+    params.enable_quite_mode() # force quiet mode
     show_message("[RED]you need to enter a search term[ENDC]")
     show_message("[GREEN]finder by=[YELLOW]<term>[ENDC]")
