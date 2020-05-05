@@ -41,5 +41,15 @@ class TestCli(unittest.TestCase):
     self.assertIsNone(cli.get_argument("-test3"))
     self.assertTrue(cli.get_argument("-test1"))
 
+  def test_set_argument(self):
+    cli.arguments_map = {}
+    self.assertIsNone(cli.get_argument("-test"))
+    cli.set_argument("-test", True)
+    self.assertTrue(cli.get_argument("-test"))
+    cli.set_argument("test2", "whatever")
+    self.assertEqual("whatever", cli.get_argument("test2"))
+    cli.set_argument("test2", "whatever-test")
+    self.assertEqual("whatever-test", cli.get_argument("test2"))
+
 if __name__ == "__main__":
   unittest.main()
