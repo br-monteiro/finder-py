@@ -9,8 +9,8 @@ class TestParams(unittest.TestCase):
     cli.arguments_map = cli.process_arguments([
       "by=test",
       "path=/home/user",
-      "-regex",
       "-recursive",
+      "-quiet",
       "recursive-level=5",
       "file-match=\\w+",
       "file-dont-match=123",
@@ -79,6 +79,13 @@ class TestParams(unittest.TestCase):
     self.assertEqual(["js", "py"], params.get_only_extensions())
     cli.arguments_map = {}
     self.assertEqual([], params.get_only_extensions())
+
+  def test_is_quiet(self):
+    self.assertTrue(params.is_quiet())
+    cli.arguments_map = {"-q": True}
+    self.assertTrue(params.is_quiet())
+    cli.arguments_map = {}
+    self.assertFalse(params.is_quiet())
 
 
 if __name__ == "__main__":
