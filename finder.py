@@ -1,18 +1,14 @@
 #!/usr/bin/python3
-import time
 import src.match_engine as engine
-from src.messenger import show_message
+from src.messenger import show_message, show_mectrics
 
 if __name__ == '__main__':
   try:
-    start_time = time.clock()
     """
     Run the app
     """
     engine.run()
-
-    show_message("[RED]---[ENDC]")
-    show_message("[GREEN][BOLD]{:.3f}".format(time.clock() - start_time) + "[ENDC] seconds")
+    show_mectrics(engine.metrics)
 
   except KeyboardInterrupt:
     show_message("[RED]Process interrupted by user[ENDC]")
