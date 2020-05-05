@@ -28,7 +28,7 @@ def get_recursive_level():
   Returns the max recursive level
   """
   MAX_LEVEL = 3
-  level = get_argument('max-recursive-level')
+  level = get_argument('recursive-level')
 
   if level == None:
     return MAX_LEVEL

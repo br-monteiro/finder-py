@@ -11,7 +11,7 @@ class TestParams(unittest.TestCase):
       "path=/home/user",
       "-regex",
       "-recursive",
-      "max-recursive-level=5",
+      "recursive-level=5",
       "file-match=\\w+",
       "file-dont-match=123",
       "jump=3",
