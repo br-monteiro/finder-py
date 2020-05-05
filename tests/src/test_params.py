@@ -34,11 +34,6 @@ class TestParams(unittest.TestCase):
     path = os.getcwd() + "/"
     self.assertEqual(path, params.get_path())
 
-  def test_is_regex(self):
-    self.assertTrue(params.is_regex())
-    cli.arguments_map = {}
-    self.assertFalse(params.is_regex())
-
   def test_is_recursive(self):
     self.assertTrue(params.is_recursive())
     cli.arguments_map = {}

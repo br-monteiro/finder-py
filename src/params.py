@@ -17,12 +17,6 @@ def get_by():
   """
   return get_argument("by")
 
-def is_regex():
-  """
-  Indicate that value of 'by' argument is a Regular Expression
-  """
-  return bool(get_argument('-regex'))
-
 def is_recursive():
   """
   Indicate that recursivity is enabled
