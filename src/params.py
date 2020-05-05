@@ -1,5 +1,5 @@
 import os
-from src.cli import get_argument
+from src.cli import get_argument, set_argument
 from src.disc_manager import add_end_slash
 from src.utils import parse_int
 
@@ -87,3 +87,9 @@ def is_quiet():
   Indicate that quiet mode is enabled
   """
   return bool(get_argument('-quiet') or get_argument('-q'))
+
+def enable_quite_mode():
+  """
+  Just enable the quiet mode
+  """
+  set_argument('-quiet', True)
