@@ -21,5 +21,20 @@ class TestUtils(unittest.TestCase):
     self.assertTrue(utils.normalize_str(True))
     self.assertFalse(utils.normalize_str(False))
 
+  def test_extract_extension(self):
+    self.assertEqual("py", utils.extract_extension("main.py"))
+    self.assertEqual("gz", utils.extract_extension("file.tar.gz"))
+    self.assertIsNone(utils.extract_extension("index.-js"))
+    self.assertIsNone(utils.extract_extension("index.-"))
+    self.assertIsNone(utils.extract_extension("index."))
+    self.assertIsNone(utils.extract_extension(""))
+    self.assertIsNone(utils.extract_extension(None))
+
+  def test_pattern_test(self):
+    self.assertTrue(utils.pattern_test("\d", "123"))
+    self.assertFalse(utils.pattern_test("\d", "abc"))
+    self.assertFalse(utils.pattern_test(None, "123"))
+    self.assertFalse(utils.pattern_test("\d", None))
+
 if __name__ == "__main__":
   unittest.main()
