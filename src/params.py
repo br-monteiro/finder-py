@@ -59,14 +59,6 @@ def get_path_dont_match():
   """
   return get_argument('path-dont-match')
 
-def get_jump():
-  """
-  Returns the quantity of ignored matches
-  """
-  jump = get_argument('jump')
-
-  return parse_int(jump) if jump else 0
-
 def abstract_get_extension(argument):
   """
   Abstract the returns of 'except-extension' and 'only-extension'
@@ -89,9 +81,3 @@ def get_only_extensions():
   Returns the values of 'only-extension' argument
   """
   return abstract_get_extension('only-extension')
-
-def get_max_file():
-  """
-  Returns the values of 'max-file' argument
-  """
-  return parse_int(get_argument('max-file'), None)

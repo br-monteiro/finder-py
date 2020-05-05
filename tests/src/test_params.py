@@ -16,10 +16,8 @@ class TestParams(unittest.TestCase):
       "file-dont-match=123",
       "path-match=\\w+",
       "path-dont-match=123",
-      "jump=3",
       "except-extension=php,java",
-      "only-extension=js,py",
-      "max-file=4",
+      "only-extension=js,py"
     ])
 
   def tearDown(self):
@@ -70,11 +68,6 @@ class TestParams(unittest.TestCase):
     cli.arguments_map = {}
     self.assertIsNone(params.get_path_dont_match())
 
-  def test_get_jump(self):
-    self.assertEqual(3, params.get_jump())
-    cli.arguments_map = {}
-    self.assertEqual(0, params.get_jump())
-
   def test_get_except_extensions(self):
     self.assertEqual(["php", "java"], params.get_except_extensions())
     cli.arguments_map = {}
@@ -85,10 +78,6 @@ class TestParams(unittest.TestCase):
     cli.arguments_map = {}
     self.assertEqual([], params.get_only_extensions())
 
-  def test_get_max_file(self):
-    self.assertEqual(4, params.get_max_file())
-    cli.arguments_map = {}
-    self.assertIsNone(params.get_max_file())
 
 if __name__ == "__main__":
   unittest.main()
