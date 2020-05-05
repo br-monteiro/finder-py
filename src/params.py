@@ -37,15 +37,27 @@ def get_recursive_level():
 
 def get_file_match():
   """
-  Returns the valur of 'file-match' argument
+  Returns the value of 'file-match' argument
   """
   return get_argument('file-match')
 
 def get_file_dont_match():
   """
-  Returns the valur of 'file-dont-match' argument
+  Returns the value of 'file-dont-match' argument
   """
   return get_argument('file-dont-match')
+
+def get_path_match():
+  """
+  Returns the value of 'path-match' argument
+  """
+  return get_argument('path-match')
+
+def get_path_dont_match():
+  """
+  Returns the value of 'path-dont-match' argument
+  """
+  return get_argument('path-dont-match')
 
 def get_jump():
   """
