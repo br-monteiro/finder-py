@@ -1,8 +1,16 @@
 import re
+from time import time
 import src.params as params
 from src.utils import extract_extension, pattern_test
 from src.messenger import show_message, print_matches
 from src.disc_manager import is_directory, is_file, get_list_dir, load_file
+
+metrics = {
+  "lines_matches_count": 0,
+  "files_count": 0,
+  "skip_count": 0,
+  "start_time": time()
+}
 
 def discoverer(regex, path, level=0):
   """
@@ -13,12 +21,21 @@ def discoverer(regex, path, level=0):
 
     for current_path in get_list_dir(path):
       """
+      Increment files metrics
+      """
+      if is_file(current_path):
+        metric_increment("files_count")
+      """
       Fire the all filter agurments
 
       A wizard is never late, nor is he early,
       He arrives precisely when he means to! - Gandalf
       """
       if you_shall_not_pass(current_path):
+        """
+        Increment 'skip' metric
+        """
+        metric_increment("skip_count")
         continue
 
       """
@@ -39,6 +56,10 @@ def search_in_file (regex, path):
 
   for (index, line) in enumerate(file_content):
     if regex.search(line):
+      """
+      Increment 'matches' metric
+      """
+      metric_increment("lines_matches_count")
       """
       print the path of file
       """
@@ -132,16 +153,23 @@ def you_shall_not_pass(current_path):
     Check if the file has a allowed extension
     """
     only_extension = params.get_only_extensions()
-    if len(only_extension) > 0 and file_extension not in only_extension:
+    if len(only_extension) and file_extension not in only_extension:
       return True
 
     """
     Check if the file has a allowed extension
     """
     except_extension = params.get_except_extensions()
-    if len(except_extension) > 0 and file_extension in except_extension:
+    if len(except_extension) and file_extension in except_extension:
       return True
   return False
+
+def metric_increment(name):
+  """
+  Just increment the metrics accorging name parameter
+  """
+  if name in metrics:
+    metrics[name] += 1
 
 def run():
   """
