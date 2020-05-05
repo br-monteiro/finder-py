@@ -60,7 +60,7 @@ def compress_text(text, length):
     compiled_regex = re.compile("(.{" + str(length) + "}?)$")
     match = compiled_regex.search(text)
     if match:
-      return "..." + match.group(1)
+      return "[YELLOW]...[ENDC]" + match.group(1)
 
   return text
 
