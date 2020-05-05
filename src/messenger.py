@@ -1,6 +1,8 @@
 import re
+import time
 from src.colors import get_colors
 from src.utils import parse_int
+from src.params import is_quiet
 
 def show_message(text: str):
   """
@@ -61,3 +63,17 @@ def compress_text(text, length):
       return "..." + match.group(1)
 
   return text
+
+def show_mectrics(metrics):
+  """
+  Print the metrics of time execution, matches and skip on the screen
+  """
+  if is_quiet() == False:
+    show_message("[RED]---[ENDC]")
+    s = " [RED]|[ENDC] " # it's just a separator
+    process_time = "[GREEN][BOLD]{:.3f}".format(time.time() - metrics["start_time"]) + "[ENDC] seconds"
+    files_count = "[GREEN][BOLD]" + str(metrics["files_count"]) + "[ENDC] files"
+    lines_matches_count = "[GREEN][BOLD]" + str(metrics["lines_matches_count"]) + "[ENDC] lines matches"
+    skip_count = "[GREEN][BOLD]" + str(metrics["skip_count"]) + "[ENDC] skip"
+
+    show_message(process_time + s + files_count + s + lines_matches_count + s + skip_count)
