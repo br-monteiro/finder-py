@@ -81,3 +81,9 @@ def get_only_extensions():
   Returns the values of 'only-extension' argument
   """
   return abstract_get_extension('only-extension')
+
+def is_quiet():
+  """
+  Indicate that quiet mode is enabled
+  """
+  return bool(get_argument('-quiet') or get_argument('-q'))
