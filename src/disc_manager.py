@@ -1,4 +1,5 @@
 import os
+import codecs
 from src.utils import normalize_str
 
 def get_list_dir(path: str):
@@ -43,7 +44,8 @@ def load_file(path: str):
   if is_file(path) == False:
     return content
 
-  file = open(path, "r")
+  file = codecs.open(path, "r",  encoding="utf-8", errors="ignore")
+
   for line in file:
     content.append(normalize_str(line))
   file.close()
