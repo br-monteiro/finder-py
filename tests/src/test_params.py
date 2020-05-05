@@ -14,6 +14,8 @@ class TestParams(unittest.TestCase):
       "recursive-level=5",
       "file-match=\\w+",
       "file-dont-match=123",
+      "path-match=\\w+",
+      "path-dont-match=123",
       "jump=3",
       "except-extension=php,java",
       "only-extension=js,py",
@@ -57,6 +59,16 @@ class TestParams(unittest.TestCase):
     self.assertEqual("123", params.get_file_dont_match())
     cli.arguments_map = {}
     self.assertIsNone(params.get_file_dont_match())
+
+  def test_get_path_match(self):
+    self.assertEqual("\\w+", params.get_path_match())
+    cli.arguments_map = {}
+    self.assertIsNone(params.get_path_match())
+
+  def test_get_path_dont_match(self):
+    self.assertEqual("123", params.get_path_dont_match())
+    cli.arguments_map = {}
+    self.assertIsNone(params.get_path_dont_match())
 
   def test_get_jump(self):
     self.assertEqual(3, params.get_jump())
