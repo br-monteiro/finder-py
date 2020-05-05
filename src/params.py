@@ -21,7 +21,7 @@ def is_recursive():
   """
   Indicate that recursivity is enabled
   """
-  return bool(get_argument('-recursive'))
+  return bool(get_argument('-recursive') or get_argument('-r'))
 
 def get_recursive_level():
   """

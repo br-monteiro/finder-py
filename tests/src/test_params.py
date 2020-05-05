@@ -36,6 +36,8 @@ class TestParams(unittest.TestCase):
 
   def test_is_recursive(self):
     self.assertTrue(params.is_recursive())
+    cli.arguments_map = {"-r": True}
+    self.assertTrue(params.is_recursive())
     cli.arguments_map = {}
     self.assertFalse(params.is_recursive())
 
