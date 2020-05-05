@@ -65,10 +65,7 @@ def get_jump():
   """
   jump = get_argument('jump')
 
-  if jump == None:
-    return 0
-
-  return parse_int(jump)
+  return parse_int(jump) if jump else 0
 
 def abstract_get_extension(argument):
   """
