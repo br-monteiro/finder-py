@@ -87,6 +87,12 @@ class TestParams(unittest.TestCase):
     cli.arguments_map = {}
     self.assertFalse(params.is_quiet())
 
+  def test_enable_quiet_mode(self):
+    cli.arguments_map = {}
+    self.assertFalse(params.is_quiet())
+    params.enable_quite_mode()
+    self.assertTrue(params.is_quiet())
+
 
 if __name__ == "__main__":
   unittest.main()
