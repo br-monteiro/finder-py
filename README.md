@@ -32,7 +32,7 @@ finder by=texto
 
 É possível melhorar o resultado de busca passando alguns argumentos especials para o `CLI`.
 
->__IMPORTANTE__: A busca só realizada em arquivos e diretórios com permissão de leitura. Caso contrário, o arquivo/diretório será ignorado no processo.
+>__IMPORTANTE__: A busca será realizada em arquivos e diretórios com permissão de leitura. Caso contrário, o arquivo/diretório será ignorado no processo.
 
 ### Argumentos
 
