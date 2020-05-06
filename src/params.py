@@ -5,7 +5,7 @@ from src.utils import parse_int
 
 def get_path():
   """
-  Returs the value of path argument
+  Returns the value of path argument
   """
   return add_end_slash(get_argument("path") or os.getcwd())
 
@@ -61,7 +61,7 @@ def get_path_dont_match():
 
 def abstract_get_extension(argument):
   """
-  Abstract the returns of 'except-extension' and 'only-extension'
+  Abstract the return of 'except-extension' and 'only-extension'
   """
   extensions = get_argument(argument)
 
@@ -72,13 +72,13 @@ def abstract_get_extension(argument):
 
 def get_except_extensions():
   """
-  Returns the values of 'except-extension' argument
+  Returns the value of 'except-extension' argument
   """
   return abstract_get_extension('except-extension')
 
 def get_only_extensions():
   """
-  Returns the values of 'only-extension' argument
+  Returns the value of 'only-extension' argument
   """
   return abstract_get_extension('only-extension')
 
@@ -87,12 +87,6 @@ def is_quiet():
   Indicate that quiet mode is enabled
   """
   return bool(get_argument('-quiet') or get_argument('-q'))
-
-def enable_quite_mode():
-  """
-  Just enable the quiet mode
-  """
-  set_argument('-quiet', True)
 
 def is_raw():
   """

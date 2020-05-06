@@ -10,7 +10,7 @@ def process_arguments(raw_arguments: list):
   arguments = {}
   for argument in raw_arguments:
     # catch the arguments with associated values
-    matches = re.search(r'^([a-z][a-z0-9-]+?)=[\'"]?(.+?)[\'"]?$', argument)
+    matches = re.search(r"^([a-z][a-z0-9-]+?)=['\"]?(.+?)['\"]?$", argument)
 
     if matches:
       arg = matches.group(1).lower()
@@ -22,7 +22,7 @@ def process_arguments(raw_arguments: list):
       continue
 
     # catch the simple arguments
-    matches = re.search(r'^(-[a-z][a-z0-9-]*?)$', argument)
+    matches = re.search(r"^(-[a-z][a-z0-9-]*?)$", argument)
     if matches:
       arg = matches.group(1)
       arguments.update({
