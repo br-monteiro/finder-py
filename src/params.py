@@ -93,3 +93,9 @@ def enable_quite_mode():
   Just enable the quiet mode
   """
   set_argument('-quiet', True)
+
+def is_raw():
+  """
+  Indicates that the value raw of 'by' should be considered
+  """
+  return bool(get_argument('-raw'))
