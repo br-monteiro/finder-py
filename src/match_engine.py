@@ -2,10 +2,10 @@ import re
 from time import time
 import src.params as params
 from src.utils import extract_extension, pattern_test
-from src.messenger import show_message, print_matches
+from src.messenger import show_message, print_matches, show_mectrics
 from src.disc_manager import is_directory, is_file, get_list_dir, load_file
 
-metrics = {
+METRICS = {
   "lines_matches_count": 0,
   "files_count": 0,
   "skip_count": 0,
@@ -166,10 +166,10 @@ def you_shall_not_pass(current_path):
 
 def metric_increment(name):
   """
-  Just increment the metrics accorging name parameter
+  Just increment the metrics according name parameter
   """
-  if name in metrics:
-    metrics[name] += 1
+  if name in METRICS:
+    METRICS[name] += 1
 
 def run():
   """
@@ -179,11 +179,17 @@ def run():
   term = params.get_by()
 
   if term:
-    regexTerm = re.compile(term)
+    """
+    Escape the search term when 'raw' argument is informed
+    """
+    if params.is_raw():
+      term = re.escape(term)
+
+    regex_term = re.compile(term)
     path = params.get_path()
-    discoverer(regexTerm, path)
+    discoverer(regex_term, path)
+    show_mectrics(METRICS)
 
   else:
-    params.enable_quite_mode() # force quiet mode
     show_message("[RED]you need to enter a search term[ENDC]")
     show_message("[GREEN]finder by=[YELLOW]<term>[ENDC]")

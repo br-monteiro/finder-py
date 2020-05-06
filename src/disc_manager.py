@@ -4,7 +4,7 @@ from src.utils import normalize_str
 
 def get_list_dir(path: str):
   """
-  Returs a list of file name from the rirectory passed by parameter
+  Returns a list of file name from the rirectory passed by parameter
   """
   if is_directory(path) == False:
     return []
@@ -14,6 +14,9 @@ def add_end_slash(value: str):
   """
   Added a slash at the end of value
   """
+  if type(value) != str:
+    return value
+
   return value if value.endswith("/") else value + "/"
 
 def is_directory(path: str):

@@ -11,6 +11,7 @@ class TestParams(unittest.TestCase):
       "path=/home/user",
       "-recursive",
       "-quiet",
+      "-raw",
       "recursive-level=5",
       "file-match=\\w+",
       "file-dont-match=123",
@@ -87,11 +88,12 @@ class TestParams(unittest.TestCase):
     cli.arguments_map = {}
     self.assertFalse(params.is_quiet())
 
-  def test_enable_quiet_mode(self):
+  def test_is_raw(self):
+    self.assertTrue(params.is_raw())
+    cli.arguments_map = {"-raw": True}
+    self.assertTrue(params.is_raw())
     cli.arguments_map = {}
-    self.assertFalse(params.is_quiet())
-    params.enable_quite_mode()
-    self.assertTrue(params.is_quiet())
+    self.assertFalse(params.is_raw())
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ def normalize_str(value: str):
   if type(value) != str:
     return value
 
-  return re.sub(r'\n', lambda m: '', value)
+  return re.sub(r"\n", lambda m: "", value)
 
 def extract_extension(path: str):
   """

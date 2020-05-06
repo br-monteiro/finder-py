@@ -27,6 +27,9 @@ class TestDiscManager(unittest.TestCase):
     self.assertEqual("/", disc_manager.add_end_slash("/"))
     self.assertEqual("/test/", disc_manager.add_end_slash("/test"))
     self.assertEqual("/test/", disc_manager.add_end_slash("/test/"))
+    self.assertIsNone(disc_manager.add_end_slash(None))
+    self.assertTrue(disc_manager.add_end_slash(True))
+    self.assertFalse(disc_manager.add_end_slash(False))
 
   def test_is_directory(self):
     self.assertTrue(disc_manager.is_directory(self.path + "/one-dir"))

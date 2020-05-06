@@ -11,8 +11,8 @@ def show_message(text: str):
   colored_text = text
 
   for name, color in get_colors().items():
-    regexColor = re.compile(re.escape(name))
-    colored_text = re.sub(regexColor, lambda i: color, colored_text)
+    regex_color = re.compile(re.escape(name))
+    colored_text = re.sub(regex_color, lambda i: color, colored_text)
 
   print(colored_text)
 
