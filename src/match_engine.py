@@ -179,6 +179,12 @@ def run():
   term = params.get_by()
 
   if term:
+    """
+    Escape the search term when 'raw' argument is informed
+    """
+    if params.is_raw():
+      term = re.escape(term)
+
     regexTerm = re.compile(term)
     path = params.get_path()
     discoverer(regexTerm, path)
