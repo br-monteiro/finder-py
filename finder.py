@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import src.match_engine as engine
-from src.messenger import show_message, show_mectrics
+from src.messenger import show_message
 
 if __name__ == "__main__":
   try:
