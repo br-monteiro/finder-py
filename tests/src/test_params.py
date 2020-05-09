@@ -22,77 +22,79 @@ class TestParams(unittest.TestCase):
     ])
 
   def tearDown(self):
-    cli.arguments_map = {}
+    cli.clear_arguments()
 
   def test_get_by(self):
     self.assertEqual("test", params.get_by())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertIsNone(params.get_by())
 
   def test_get_argument(self):
     self.assertEqual("/home/user/", params.get_path())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     path = os.getcwd() + "/"
     self.assertEqual(path, params.get_path())
 
   def test_is_recursive(self):
     self.assertTrue(params.is_recursive())
-    cli.arguments_map = {"-r": True}
+    cli.clear_arguments()
+    cli.set_argument("-r", True)
     self.assertTrue(params.is_recursive())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertFalse(params.is_recursive())
 
   def test_get_recursive_level(self):
     self.assertEqual(5, params.get_recursive_level())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertEqual(3, params.get_recursive_level())
-    cli.arguments_map = {
-      "max-recursive-level": "abc"
-    }
+    cli.set_argument("recursive-level", 7)
+    self.assertEqual(7, params.get_recursive_level())
+    cli.set_argument("recursive-level", "abc")
     self.assertEqual(3, params.get_recursive_level())
 
   def test_get_file_match(self):
     self.assertEqual("\\w+", params.get_file_match())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertIsNone(params.get_file_match())
 
   def test_get_file_dont_match(self):
     self.assertEqual("123", params.get_file_dont_match())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertIsNone(params.get_file_dont_match())
 
   def test_get_path_match(self):
     self.assertEqual("\\w+", params.get_path_match())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertIsNone(params.get_path_match())
 
   def test_get_path_dont_match(self):
     self.assertEqual("123", params.get_path_dont_match())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertIsNone(params.get_path_dont_match())
 
   def test_get_except_extensions(self):
     self.assertEqual(["php", "java"], params.get_except_extensions())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertEqual([], params.get_except_extensions())
 
   def test_get_only_extensions(self):
     self.assertEqual(["js", "py"], params.get_only_extensions())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertEqual([], params.get_only_extensions())
 
   def test_is_quiet(self):
     self.assertTrue(params.is_quiet())
-    cli.arguments_map = {"-q": True}
+    cli.clear_arguments()
+    cli.set_argument("-q", True)
     self.assertTrue(params.is_quiet())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertFalse(params.is_quiet())
 
   def test_is_raw(self):
     self.assertTrue(params.is_raw())
-    cli.arguments_map = {"-raw": True}
+    cli.set_argument("-raw", True)
     self.assertTrue(params.is_raw())
-    cli.arguments_map = {}
+    cli.clear_arguments()
     self.assertFalse(params.is_raw())
 
 

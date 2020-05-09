@@ -34,6 +34,7 @@ def get_arguments():
   """
   Returns the Arguments Map values
   """
+  global arguments_map
   return arguments_map
 
 def get_argument(name: str):
@@ -41,15 +42,24 @@ def get_argument(name: str):
   Returns one argument from CLI by name
   If there is no argument, returns None
   """
+  global arguments_map
   return arguments_map[name] if name in arguments_map else None
 
 def set_argument(key, value):
   """
   Set a new value into 'arguments_map'
   """
+  global arguments_map
   arguments_map.update({
     key: value
   })
+
+def clear_arguments():
+  """
+  Clear all arguments from 'arguments_map'
+  """
+  global arguments_map
+  arguments_map = {}
 
 if len(arguments_map) == 0:
   # process the arguments and populates the Dict arguments_map
