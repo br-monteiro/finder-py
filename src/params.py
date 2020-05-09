@@ -21,14 +21,14 @@ def is_recursive():
   """
   Indicate that recursivity is enabled
   """
-  return bool(get_argument('-recursive') or get_argument('-r'))
+  return bool(get_argument("-recursive") or get_argument("-r"))
 
 def get_recursive_level():
   """
   Returns the max recursive level
   """
   MAX_LEVEL = 3
-  level = get_argument('recursive-level')
+  level = get_argument("recursive-level") or get_argument("rl")
 
   if level == None:
     return MAX_LEVEL
@@ -39,25 +39,25 @@ def get_file_match():
   """
   Returns the value of 'file-match' argument
   """
-  return get_argument('file-match')
+  return get_argument("file-match") or get_argument("fm")
 
 def get_file_dont_match():
   """
   Returns the value of 'file-dont-match' argument
   """
-  return get_argument('file-dont-match')
+  return get_argument("file-dont-match") or get_argument("fdm")
 
 def get_path_match():
   """
   Returns the value of 'path-match' argument
   """
-  return get_argument('path-match')
+  return get_argument("path-match") or get_argument("pm")
 
 def get_path_dont_match():
   """
   Returns the value of 'path-dont-match' argument
   """
-  return get_argument('path-dont-match')
+  return get_argument("path-dont-match") or get_argument("pdm")
 
 def abstract_get_extension(argument):
   """
@@ -74,25 +74,27 @@ def get_except_extensions():
   """
   Returns the value of 'except-extension' argument
   """
-  return abstract_get_extension('except-extension')
+  argument_name = "except-extension" if get_argument("except-extension") else "ee"
+  return abstract_get_extension(argument_name)
 
 def get_only_extensions():
   """
   Returns the value of 'only-extension' argument
   """
-  return abstract_get_extension('only-extension')
+  argument_name = "only-extension" if get_argument("only-extension") else "oe"
+  return abstract_get_extension(argument_name)
 
 def is_quiet():
   """
   Indicate that quiet mode is enabled
   """
-  return bool(get_argument('-quiet') or get_argument('-q'))
+  return bool(get_argument("-quiet") or get_argument("-q"))
 
 def is_raw():
   """
   Indicates that the value raw of 'by' should be considered
   """
-  return bool(get_argument('-raw'))
+  return bool(get_argument("-raw"))
 
 def is_help():
   """
@@ -101,6 +103,6 @@ def is_help():
   from sys import argv
 
   try:
-    return argv.index('--help') == 1
+    return argv.index("--help") == 1
   except ValueError:
     return False
