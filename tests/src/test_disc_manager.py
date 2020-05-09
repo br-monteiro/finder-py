@@ -55,5 +55,15 @@ class TestDiscManager(unittest.TestCase):
     self.assertEqual([], disc_manager.load_file("/whatever.txt"))
     self.assertEqual([], disc_manager.load_file(""))
 
+  def test_get_file_name_from(self):
+    self.assertEqual("", disc_manager.get_file_name_from(False))
+    self.assertEqual("", disc_manager.get_file_name_from(True))
+    self.assertEqual("", disc_manager.get_file_name_from(None))
+    self.assertEqual("", disc_manager.get_file_name_from("/"))
+    self.assertEqual("", disc_manager.get_file_name_from(""))
+    self.assertEqual("test.txt", disc_manager.get_file_name_from("/test.txt"))
+    self.assertEqual("test.txt", disc_manager.get_file_name_from("lll/test.txt"))
+    self.assertEqual("test.txt", disc_manager.get_file_name_from("test.txt"))
+
 if __name__ == "__main__":
   unittest.main()
