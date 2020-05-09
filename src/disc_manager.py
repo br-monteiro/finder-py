@@ -54,3 +54,12 @@ def load_file(path: str):
   file.close()
 
   return content
+
+def get_file_name_from(path: str):
+  """
+  Extract the file name and return it
+  """
+  if type(path) != str:
+    return ""
+  chunks = path.split("/")
+  return chunks[-1]
