@@ -3,7 +3,7 @@ import src.params as params
 from time import time
 from src.utils import extract_extension, pattern_test
 from src.messenger import show_message, print_matches, show_mectrics, show_help
-from src.disc_manager import is_directory, is_file, get_list_dir, load_file
+from src.disc_manager import is_directory, is_file, get_list_dir, load_file, get_file_name_from
 
 METRICS = {
   "lines_matches_count": 0,
@@ -133,20 +133,21 @@ def you_shall_not_pass(current_path):
     return True
 
   if is_file(current_path):
+    file_name = get_file_name_from(current_path)
     file_extension = extract_extension(current_path)
 
     """
     Check the value of 'file-dont-match'
     If the path is not allowed, then continue the loop
     """
-    if is_file_dont_match(current_path):
+    if is_file_dont_match(file_name):
       return True
 
     """
     Check the value of 'file-match'
     If the path is not allowed, then continue the loop
     """
-    if is_file_match(current_path) == False:
+    if is_file_match(file_name) == False:
       return True
 
     """
