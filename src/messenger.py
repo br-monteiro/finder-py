@@ -77,3 +77,14 @@ def show_mectrics(metrics):
     skip_count = "[GREEN][BOLD]" + str(metrics["skip_count"]) + "[ENDC] skip"
 
     show_message(process_time + s + files_count + s + lines_matches_count + s + skip_count)
+
+def show_help():
+  """
+  Shows the commands descriptions
+  """
+  from os import path
+  from src.disc_manager import load_file
+
+  file = load_file(path.dirname(__file__) + "/../help_splash.txt")
+  content = "\n".join(file) if file else ""
+  show_message(content)
