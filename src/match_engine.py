@@ -2,7 +2,7 @@ import re
 import src.params as params
 from time import time
 from src.utils import extract_extension, pattern_test
-from src.messenger import show_message, print_matches, show_mectrics
+from src.messenger import show_message, print_matches, show_mectrics, show_help
 from src.disc_manager import is_directory, is_file, get_list_dir, load_file
 
 METRICS = {
@@ -176,6 +176,10 @@ def run():
   Fire the chaos
   From this point, you're lost
   """
+  if params.is_help():
+    show_help()
+    return # just stop the execution
+
   term = params.get_by()
 
   if term:
