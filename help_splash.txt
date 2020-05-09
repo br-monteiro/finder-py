@@ -26,39 +26,46 @@
                         >finder by=test [YELLOW]-recursive[ENDC]
                         >finder by=test [YELLOW]-r[ENDC]
 
-[GREEN]recursive-level[ENDC]         Changes the maximum level of subdirectories where
+[GREEN]recursive-level, rl[ENDC]     Changes the maximum level of subdirectories where
                         the CLI will perform the search.
                         ---
                         >finder by=test [GREEN]recursive-level[ENDC]=[YELLOW]5 -r[ENDC]
+                        >finder by=test [GREEN]rl[ENDC]=[YELLOW]5 -r[ENDC]
 
-[GREEN]file-match[ENDC]              Informs the CLI to search for the term
+[GREEN]file-match, fm[ENDC]          Informs the CLI to search for the term
                         [YELLOW]only[ENDC] on files where [YELLOW]RegEx[ENDC] is satisfied
                         ---
                         >finder by=test [GREEN]file-match[ENDC]=[YELLOW]\\d-abc[ENDC]
                         >finder by=test [GREEN]file-match[ENDC]=[YELLOW]".*-abc|template-*"[ENDC]
+                        >finder by=test [GREEN]fm[ENDC]=[YELLOW]".*-abc|template-*"[ENDC]
 
-[GREEN]file-dont-match[ENDC]         Informs the CLI to [YELLOW]ignore[ENDC] the term search
+[GREEN]file-dont-match, fdm[ENDC]    Informs the CLI to [YELLOW]ignore[ENDC] the term search
                         ---
                         only on files when RegEx is satisfied.
-                        >finder by=test [GREEN]file-match[ENDC]=[YELLOW]".*\\.min\\.js|.blade"[ENDC]
+                        >finder by=test [GREEN]file-dont-match[ENDC]=[YELLOW]".*\\.min\\.js|.blade"[ENDC]
+                        >finder by=test [GREEN]fdm[ENDC]=[YELLOW]".*\\.min\\.js|.blade"[ENDC]
 
-[GREEN]path-match[ENDC]              Informs the CLI to search for the term [YELLOW]only[ENDC]
+[GREEN]path-match, pm[ENDC]          Informs the CLI to search for the term [YELLOW]only[ENDC]
                         when RegEx is satisfied
                         ---
                         >finder by=test [GREEN]path-match[ENDC]=[YELLOW]"src|public"[ENDC]
+                        >finder by=test [GREEN]pm[ENDC]=[YELLOW]"src|public"[ENDC]
 
-[GREEN]path-dont-match[ENDC]         Informs the CLI to [YELLOW]ignore[ENDC] the term search when
+[GREEN]path-dont-match, pdm[ENDC]    Informs the CLI to [YELLOW]ignore[ENDC] the term search when
                         RegEx is satisfied
                         ---
                         >finder by=test [GREEN]path-dont-match[ENDC]=[YELLOW]"dist|node_modules"[ENDC]
+                        >finder by=test [GREEN]pdm[ENDC]=[YELLOW]"dist|node_modules"[ENDC]
 
-[GREEN]only-extension[ENDC]          Informs the CLI to search only files with the given extension
+[GREEN]only-extension, oe[ENDC]      Informs the CLI to search only files with the given extension
                         ---
                         >finder by=test [GREEN]only-extension[ENDC]=[YELLOW]js,py[ENDC]
+                        >finder by=test [GREEN]oe[ENDC]=[YELLOW]js,py[ENDC]
 
-[GREEN]except-extension[ENDC]        Informs the CLI to skip the file search with the reported extension
+[GREEN]except-extension, ee[ENDC]    Informs the CLI to skip the file search with the reported extension
                         ---
                         >finder by=test [GREEN]except-extension[ENDC]=[YELLOW]json,java[ENDC]
+                        >finder by=test [GREEN]ee[ENDC]=[YELLOW]json,java[ENDC]
 
 [GREEN]-quiet, -q[ENDC]              Informs the CLI not to display the information when
                         the search is finished
