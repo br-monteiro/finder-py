@@ -20,7 +20,7 @@ class TestCli(unittest.TestCase):
     ])
 
   def tearDown(self):
-    cli.arguments_map = {}
+    cli.clear_arguments()
 
   def test_process_arguments(self):
     expected = {
@@ -42,7 +42,6 @@ class TestCli(unittest.TestCase):
     self.assertTrue(cli.get_argument("-test1"))
 
   def test_set_argument(self):
-    cli.arguments_map = {}
     self.assertIsNone(cli.get_argument("-test"))
     cli.set_argument("-test", True)
     self.assertTrue(cli.get_argument("-test"))
@@ -50,6 +49,15 @@ class TestCli(unittest.TestCase):
     self.assertEqual("whatever", cli.get_argument("test2"))
     cli.set_argument("test2", "whatever-test")
     self.assertEqual("whatever-test", cli.get_argument("test2"))
+
+  def test_clear_arguments(self):
+    cli.set_argument("test-a", "a")
+    cli.set_argument("-test-b", True)
+    self.assertEqual("a", cli.get_argument("test-a"))
+    self.assertTrue(cli.get_argument("-test-b"))
+    cli.clear_arguments()
+    self.assertIsNone(cli.get_argument("test-a"))
+    self.assertIsNone(cli.get_argument("-test-b"))
 
 if __name__ == "__main__":
   unittest.main()
