@@ -52,36 +52,51 @@ class TestParams(unittest.TestCase):
     self.assertEqual(7, params.get_recursive_level())
     cli.set_argument("recursive-level", "abc")
     self.assertEqual(3, params.get_recursive_level())
+    cli.clear_arguments()
+    cli.set_argument("rl", 77)
+    self.assertEqual(77, params.get_recursive_level())
 
   def test_get_file_match(self):
     self.assertEqual("\\w+", params.get_file_match())
     cli.clear_arguments()
     self.assertIsNone(params.get_file_match())
+    cli.set_argument("fm", "*-test-*")
+    self.assertEqual("*-test-*", params.get_file_match())
 
   def test_get_file_dont_match(self):
     self.assertEqual("123", params.get_file_dont_match())
     cli.clear_arguments()
     self.assertIsNone(params.get_file_dont_match())
+    cli.set_argument("fdm", "*-test-*")
+    self.assertEqual("*-test-*", params.get_file_dont_match())
 
   def test_get_path_match(self):
     self.assertEqual("\\w+", params.get_path_match())
     cli.clear_arguments()
     self.assertIsNone(params.get_path_match())
+    cli.set_argument("pm", "*-test-*")
+    self.assertEqual("*-test-*", params.get_path_match())
 
   def test_get_path_dont_match(self):
     self.assertEqual("123", params.get_path_dont_match())
     cli.clear_arguments()
     self.assertIsNone(params.get_path_dont_match())
+    cli.set_argument("pdm", "*-test-*")
+    self.assertEqual("*-test-*", params.get_path_dont_match())
 
   def test_get_except_extensions(self):
     self.assertEqual(["php", "java"], params.get_except_extensions())
     cli.clear_arguments()
     self.assertEqual([], params.get_except_extensions())
+    cli.set_argument("ee", "json,md")
+    self.assertEqual(["json", "md"], params.get_except_extensions())
 
   def test_get_only_extensions(self):
     self.assertEqual(["js", "py"], params.get_only_extensions())
     cli.clear_arguments()
     self.assertEqual([], params.get_only_extensions())
+    cli.set_argument("oe", "php,html")
+    self.assertEqual(["php", "html"], params.get_only_extensions())
 
   def test_is_quiet(self):
     self.assertTrue(params.is_quiet())
