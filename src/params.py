@@ -93,3 +93,14 @@ def is_raw():
   Indicates that the value raw of 'by' should be considered
   """
   return bool(get_argument('-raw'))
+
+def is_help():
+  """
+  Check if the help mode is enabled
+  """
+  from sys import argv
+
+  try:
+    return argv.index('--help') == 1
+  except ValueError:
+    return False
