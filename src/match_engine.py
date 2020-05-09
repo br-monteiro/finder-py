@@ -1,6 +1,6 @@
 import re
-from time import time
 import src.params as params
+from time import time
 from src.utils import extract_extension, pattern_test
 from src.messenger import show_message, print_matches, show_mectrics
 from src.disc_manager import is_directory, is_file, get_list_dir, load_file
