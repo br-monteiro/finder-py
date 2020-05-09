@@ -2,6 +2,7 @@ import os
 import unittest
 import src.cli as cli
 import src.params as params
+from sys import argv
 
 class TestParams(unittest.TestCase):
 
@@ -96,6 +97,13 @@ class TestParams(unittest.TestCase):
     self.assertTrue(params.is_raw())
     cli.clear_arguments()
     self.assertFalse(params.is_raw())
+
+  def test_is_help(self):
+    if argv.count('-v'):
+      argv.remove('-v')
+    self.assertFalse(params.is_help())
+    argv.append("--help")
+    self.assertTrue(params.is_help())
 
 
 if __name__ == "__main__":
