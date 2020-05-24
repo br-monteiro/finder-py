@@ -1,16 +1,16 @@
 import os
 import codecs
-from src.utils import normalize_str
+from src.utils import normalizestr
 
-def get_list_dir(path: str):
+def get_listdir(path: str):
   """
   Returns a list of file name from the rirectory passed by parameter
   """
-  if is_directory(path) == False:
+  if isdirectory(path) == False:
     return []
-  return list(map(lambda item: add_end_slash(path) + item, os.listdir(path)))
+  return list(map(lambda item: addendslash(path) + item, os.listdir(path)))
 
-def add_end_slash(value: str):
+def addendslash(value: str):
   """
   Added a slash at the end of value
   """
@@ -19,43 +19,43 @@ def add_end_slash(value: str):
 
   return value if value.endswith("/") else value + "/"
 
-def is_directory(path: str):
+def isdirectory(path: str):
   """
   Checks if the path is a readable directory
   """
-  return os.path.isdir(path) and is_readable(path)
+  return os.path.isdir(path) and isreadable(path)
 
-def is_file(path: str):
+def isfile(path: str):
   """
   Checks if the path is a readable file
   """
-  return os.path.isfile(path) and is_readable(path)
+  return os.path.isfile(path) and isreadable(path)
 
-def is_readable(path: str):
+def isreadable(path: str):
   """
   Checks if the path is a readable source
   """
   return os.access(path=path, mode=os.R_OK)
 
-def load_file(path: str):
+def loadfile(path: str):
   """
   Reads a file and returns its contents as List
   If the file is not readable, returns an empty List
   """
   content = []
 
-  if is_file(path) == False:
+  if isfile(path) == False:
     return content
 
   file = codecs.open(path, "r",  encoding="utf-8", errors="ignore")
 
   for line in file:
-    content.append(normalize_str(line))
+    content.append(normalizestr(line))
   file.close()
 
   return content
 
-def get_file_name_from(path: str):
+def get_filename(path: str):
   """
   Extract the file name and return it
   """

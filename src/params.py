@@ -1,13 +1,13 @@
 import os
-from src.cli import get_argument, set_argument
-from src.disc_manager import add_end_slash
-from src.utils import parse_int
+from src.cli import get_argument, set_argument, get_arguments
+from src.disc_manager import addendslash
+from src.utils import parseint
 
 def get_path():
   """
   Returns the value of path argument
   """
-  return add_end_slash(get_argument("path") or os.getcwd())
+  return addendslash(get_argument("path") or os.getcwd())
 
 def get_by():
   """
@@ -17,7 +17,7 @@ def get_by():
   """
   return get_argument("by")
 
-def is_recursive():
+def isrecursive():
   """
   Indicate that recursivity is enabled
   """
@@ -33,7 +33,7 @@ def get_recursive_level():
   if level == None:
     return MAX_LEVEL
 
-  return parse_int(level, MAX_LEVEL)
+  return parseint(level, MAX_LEVEL)
 
 def get_file_match():
   """
@@ -84,19 +84,19 @@ def get_only_extensions():
   argument_name = "only-extension" if get_argument("only-extension") else "oe"
   return abstract_get_extension(argument_name)
 
-def is_quiet():
+def isquiet():
   """
   Indicate that quiet mode is enabled
   """
   return bool(get_argument("-quiet") or get_argument("-q"))
 
-def is_raw():
+def israw():
   """
   Indicates that the value raw of 'by' should be considered
   """
   return bool(get_argument("-raw"))
 
-def is_help():
+def ishelp():
   """
   Check if the help mode is enabled
   """

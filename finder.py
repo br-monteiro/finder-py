@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import src.match_engine as engine
-from src.messenger import show_message
+from src.messenger import message
 
 if __name__ == "__main__":
   try:
@@ -10,4 +10,4 @@ if __name__ == "__main__":
     engine.run()
 
   except KeyboardInterrupt:
-    show_message("[RED]Process interrupted by user[ENDC]")
+    message("[RED]Process interrupted by user[ENDC]")

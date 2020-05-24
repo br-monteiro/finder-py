@@ -7,7 +7,7 @@ from sys import argv
 class TestParams(unittest.TestCase):
 
   def setUp(self):
-    cli.arguments_map = cli.process_arguments([
+    arguments = cli.process_arguments([
       "by=test",
       "path=/home/user",
       "-recursive",
@@ -21,6 +21,7 @@ class TestParams(unittest.TestCase):
       "except-extension=php,java",
       "only-extension=js,py"
     ])
+    cli.set_arguments(arguments)
 
   def tearDown(self):
     cli.clear_arguments()
@@ -36,13 +37,13 @@ class TestParams(unittest.TestCase):
     path = os.getcwd() + "/"
     self.assertEqual(path, params.get_path())
 
-  def test_is_recursive(self):
-    self.assertTrue(params.is_recursive())
+  def test_isrecursive(self):
+    self.assertTrue(params.isrecursive())
     cli.clear_arguments()
     cli.set_argument("-r", True)
-    self.assertTrue(params.is_recursive())
+    self.assertTrue(params.isrecursive())
     cli.clear_arguments()
-    self.assertFalse(params.is_recursive())
+    self.assertFalse(params.isrecursive())
 
   def test_get_recursive_level(self):
     self.assertEqual(5, params.get_recursive_level())
@@ -98,27 +99,27 @@ class TestParams(unittest.TestCase):
     cli.set_argument("oe", "php,html")
     self.assertEqual(["php", "html"], params.get_only_extensions())
 
-  def test_is_quiet(self):
-    self.assertTrue(params.is_quiet())
+  def test_isquiet(self):
+    self.assertTrue(params.isquiet())
     cli.clear_arguments()
     cli.set_argument("-q", True)
-    self.assertTrue(params.is_quiet())
+    self.assertTrue(params.isquiet())
     cli.clear_arguments()
-    self.assertFalse(params.is_quiet())
+    self.assertFalse(params.isquiet())
 
-  def test_is_raw(self):
-    self.assertTrue(params.is_raw())
+  def test_israw(self):
+    self.assertTrue(params.israw())
     cli.set_argument("-raw", True)
-    self.assertTrue(params.is_raw())
+    self.assertTrue(params.israw())
     cli.clear_arguments()
-    self.assertFalse(params.is_raw())
+    self.assertFalse(params.israw())
 
-  def test_is_help(self):
+  def test_ishelp(self):
     if argv.count('-v'):
       argv.remove('-v')
-    self.assertFalse(params.is_help())
+    self.assertFalse(params.ishelp())
     argv.append("--help")
-    self.assertTrue(params.is_help())
+    self.assertTrue(params.ishelp())
 
 
 if __name__ == "__main__":

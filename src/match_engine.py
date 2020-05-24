@@ -1,9 +1,9 @@
 import re
 import src.params as params
 from time import time
-from src.utils import extract_extension, pattern_test
-from src.messenger import show_message, print_matches, show_mectrics, show_help
-from src.disc_manager import is_directory, is_file, get_list_dir, load_file, get_file_name_from
+from src.utils import get_ext, re_test
+from src.messenger import message, print_matches, show_mectrics, help_
+from src.disc_manager import isdirectory, isfile, get_listdir, loadfile, get_filename
 
 METRICS = {
   "lines_matches_count": 0,
@@ -16,14 +16,14 @@ def discoverer(regex, path, level=0):
   """
   Scout the current path and fire the 'regex' into files
   """
-  if is_directory(path):
+  if isdirectory(path):
     recursive_level = params.get_recursive_level()
 
-    for current_path in get_list_dir(path):
+    for current_path in get_listdir(path):
       """
       Increment files metrics
       """
-      if is_file(current_path):
+      if isfile(current_path):
         metric_increment("files_count")
       """
       Fire the all filter agurments
@@ -41,17 +41,17 @@ def discoverer(regex, path, level=0):
       """
       Release the Kraken
       """
-      if is_file(current_path):
+      if isfile(current_path):
         search_in_file(regex, current_path)
 
-      elif is_directory(current_path) and params.is_recursive() and level < recursive_level:
+      elif isdirectory(current_path) and params.isrecursive() and level < recursive_level:
         discoverer(regex, current_path, level + 1)
 
 def search_in_file (regex, path):
   """
   Search the term with 'regex' in file of 'path'
   """
-  file_content = load_file(path)
+  file_content = loadfile(path)
   current_path = None
 
   for (index, line) in enumerate(file_content):
@@ -65,11 +65,11 @@ def search_in_file (regex, path):
       """
       if current_path != path:
         current_path = path
-        show_message("[GREEN]" + path + "[ENDC]")
+        message("[GREEN]" + path + "[ENDC]")
 
       print_matches(regex, str(index + 1), line)
 
-def is_path_match(path):
+def path_match(path):
   """
   Checks if a value was entered in the argument 'path-match'
   In case of success, fire the pattern in current 'path'
@@ -79,9 +79,9 @@ def is_path_match(path):
   if not path_match:
     return True
 
-  return pattern_test(path_match, path)
+  return re_test(path_match, path)
 
-def is_path_dont_match(path):
+def path_dont_match(path):
   """
   Checks if a value was entered in the argument 'path-dont-match'
   In case of success, fire the pattern in current 'path'
@@ -91,9 +91,9 @@ def is_path_dont_match(path):
   if not path_dont_match:
     return False
 
-  return pattern_test(path_dont_match, path)
+  return re_test(path_dont_match, path)
 
-def is_file_match(path):
+def isfile_match(path):
   """
   Checks if a value was entered in the argument 'file-match'
   In case of success, fire the pattern in current 'path'
@@ -103,9 +103,9 @@ def is_file_match(path):
   if not file_match:
     return True
 
-  return pattern_test(file_match, path)
+  return re_test(file_match, path)
 
-def is_file_dont_match(path):
+def isfile_dont_match(path):
   """
   Checks if a value was entered in the argument 'file-dont-match'
   In case of success, fire the pattern in current 'path'
@@ -115,39 +115,39 @@ def is_file_dont_match(path):
   if not file_dont_match:
     return False
 
-  return pattern_test(file_dont_match, path)
+  return re_test(file_dont_match, path)
 
 def you_shall_not_pass(current_path):
   """
   Check the value of 'path-dont-match'
   If the path is not allowed, then continue the loop
   """
-  if is_path_dont_match(current_path):
+  if path_dont_match(current_path):
     return True
 
   """
   Check the value of 'path-match'
   If the path is not allowed, then continue the loop
   """
-  if is_path_match(current_path) == False:
+  if path_match(current_path) == False:
     return True
 
-  if is_file(current_path):
-    file_name = get_file_name_from(current_path)
-    file_extension = extract_extension(current_path)
+  if isfile(current_path):
+    file_name = get_filename(current_path)
+    file_extension = get_ext(current_path)
 
     """
     Check the value of 'file-dont-match'
     If the path is not allowed, then continue the loop
     """
-    if is_file_dont_match(file_name):
+    if isfile_dont_match(file_name):
       return True
 
     """
     Check the value of 'file-match'
     If the path is not allowed, then continue the loop
     """
-    if is_file_match(file_name) == False:
+    if isfile_match(file_name) == False:
       return True
 
     """
@@ -177,8 +177,8 @@ def run():
   Fire the chaos
   From this point, you're lost
   """
-  if params.is_help():
-    show_help()
+  if params.ishelp():
+    help_()
     return # just stop the execution
 
   term = params.get_by()
@@ -187,7 +187,7 @@ def run():
     """
     Escape the search term when 'raw' argument is informed
     """
-    if params.is_raw():
+    if params.israw():
       term = re.escape(term)
 
     regex_term = re.compile(term)
@@ -196,5 +196,5 @@ def run():
     show_mectrics(METRICS)
 
   else:
-    show_message("[RED]you need to enter a search term[ENDC]")
-    show_message("[GREEN]finder by=[YELLOW]<term>[ENDC]")
+    message("[RED]you need to enter a search term[ENDC]")
+    message("[GREEN]finder by=[YELLOW]<term>[ENDC]")

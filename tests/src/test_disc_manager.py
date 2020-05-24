@@ -10,60 +10,60 @@ class TestDiscManager(unittest.TestCase):
   def tearDown(self):
     self.path = None
 
-  def test_get_list_dir(self):
+  def test_get_listdir(self):
     expected = [
       self.path + "/one-dir",
       self.path + "/test.txt",
       self.path + "/other-test.txt"
     ]
-    self.assertEqual(expected, disc_manager.get_list_dir(self.path))
-    self.assertEqual([], disc_manager.get_list_dir(self.path + "/whatever"))
-    self.assertEqual([], disc_manager.get_list_dir(self.path + "/test.txt"))
-    self.assertEqual([], disc_manager.get_list_dir("/whatever"))
-    self.assertEqual([], disc_manager.get_list_dir(""))
+    self.assertEqual(expected, disc_manager.get_listdir(self.path))
+    self.assertEqual([], disc_manager.get_listdir(self.path + "/whatever"))
+    self.assertEqual([], disc_manager.get_listdir(self.path + "/test.txt"))
+    self.assertEqual([], disc_manager.get_listdir("/whatever"))
+    self.assertEqual([], disc_manager.get_listdir(""))
 
   def test_add_slash(self):
-    self.assertEqual("/", disc_manager.add_end_slash(""))
-    self.assertEqual("/", disc_manager.add_end_slash("/"))
-    self.assertEqual("/test/", disc_manager.add_end_slash("/test"))
-    self.assertEqual("/test/", disc_manager.add_end_slash("/test/"))
-    self.assertIsNone(disc_manager.add_end_slash(None))
-    self.assertTrue(disc_manager.add_end_slash(True))
-    self.assertFalse(disc_manager.add_end_slash(False))
+    self.assertEqual("/", disc_manager.addendslash(""))
+    self.assertEqual("/", disc_manager.addendslash("/"))
+    self.assertEqual("/test/", disc_manager.addendslash("/test"))
+    self.assertEqual("/test/", disc_manager.addendslash("/test/"))
+    self.assertIsNone(disc_manager.addendslash(None))
+    self.assertTrue(disc_manager.addendslash(True))
+    self.assertFalse(disc_manager.addendslash(False))
 
-  def test_is_directory(self):
-    self.assertTrue(disc_manager.is_directory(self.path + "/one-dir"))
-    self.assertFalse(disc_manager.is_directory(self.path + "/test.txt"))
-    self.assertFalse(disc_manager.is_directory("/root"))
-    self.assertFalse(disc_manager.is_directory("/root/whatever"))
+  def test_isdirectory(self):
+    self.assertTrue(disc_manager.isdirectory(self.path + "/one-dir"))
+    self.assertFalse(disc_manager.isdirectory(self.path + "/test.txt"))
+    self.assertFalse(disc_manager.isdirectory("/root"))
+    self.assertFalse(disc_manager.isdirectory("/root/whatever"))
 
-  def test_is_file(self):
-    self.assertFalse(disc_manager.is_file(self.path + "/one-dir"))
-    self.assertTrue(disc_manager.is_file(self.path + "/test.txt"))
-    self.assertFalse(disc_manager.is_file("/root"))
-    self.assertFalse(disc_manager.is_file("/root/.profile"))
+  def test_isfile(self):
+    self.assertFalse(disc_manager.isfile(self.path + "/one-dir"))
+    self.assertTrue(disc_manager.isfile(self.path + "/test.txt"))
+    self.assertFalse(disc_manager.isfile("/root"))
+    self.assertFalse(disc_manager.isfile("/root/.profile"))
 
-  def test_is_readable(self):
-    self.assertTrue(disc_manager.is_readable(self.path + "/one-dir"))
-    self.assertTrue(disc_manager.is_readable(self.path + "/test.txt"))
-    self.assertFalse(disc_manager.is_readable("/root"))
-    self.assertFalse(disc_manager.is_readable("/root/whatever"))
+  def test_isreadable(self):
+    self.assertTrue(disc_manager.isreadable(self.path + "/one-dir"))
+    self.assertTrue(disc_manager.isreadable(self.path + "/test.txt"))
+    self.assertFalse(disc_manager.isreadable("/root"))
+    self.assertFalse(disc_manager.isreadable("/root/whatever"))
 
-  def test_load_file(self):
+  def test_loadfile(self):
     expected = ["simple test", "second line"]
-    self.assertEqual(expected, disc_manager.load_file(self.path + "/test.txt"))
-    self.assertEqual([], disc_manager.load_file("/whatever.txt"))
-    self.assertEqual([], disc_manager.load_file(""))
+    self.assertEqual(expected, disc_manager.loadfile(self.path + "/test.txt"))
+    self.assertEqual([], disc_manager.loadfile("/whatever.txt"))
+    self.assertEqual([], disc_manager.loadfile(""))
 
-  def test_get_file_name_from(self):
-    self.assertEqual("", disc_manager.get_file_name_from(False))
-    self.assertEqual("", disc_manager.get_file_name_from(True))
-    self.assertEqual("", disc_manager.get_file_name_from(None))
-    self.assertEqual("", disc_manager.get_file_name_from("/"))
-    self.assertEqual("", disc_manager.get_file_name_from(""))
-    self.assertEqual("test.txt", disc_manager.get_file_name_from("/test.txt"))
-    self.assertEqual("test.txt", disc_manager.get_file_name_from("lll/test.txt"))
-    self.assertEqual("test.txt", disc_manager.get_file_name_from("test.txt"))
+  def test_get_filename(self):
+    self.assertEqual("", disc_manager.get_filename(False))
+    self.assertEqual("", disc_manager.get_filename(True))
+    self.assertEqual("", disc_manager.get_filename(None))
+    self.assertEqual("", disc_manager.get_filename("/"))
+    self.assertEqual("", disc_manager.get_filename(""))
+    self.assertEqual("test.txt", disc_manager.get_filename("/test.txt"))
+    self.assertEqual("test.txt", disc_manager.get_filename("lll/test.txt"))
+    self.assertEqual("test.txt", disc_manager.get_filename("test.txt"))
 
 if __name__ == "__main__":
   unittest.main()
