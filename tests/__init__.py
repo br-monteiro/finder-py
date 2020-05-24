@@ -5,6 +5,7 @@ import tests.src.test_params as test_params
 import tests.src.test_utils as test_utils
 import tests.src.test_messenger as test_messenger
 import tests.src.test_colors as test_colors
+import tests.src.test_metrict as test_metrict
 
 def load_tests(loader, tests, pattern):
   suite = unittest.TestSuite()
@@ -14,5 +15,6 @@ def load_tests(loader, tests, pattern):
   suite.addTests(loader.loadTestsFromModule(test_utils))
   suite.addTests(loader.loadTestsFromModule(test_messenger))
   suite.addTests(loader.loadTestsFromModule(test_colors))
+  suite.addTests(loader.loadTestsFromModule(test_metrict))
 
   return suite

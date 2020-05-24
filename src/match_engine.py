@@ -1,18 +1,12 @@
 import re
 import src.params as params
+from src.metrict import Metric
 from time import time
 from src.utils import get_ext, re_test
 from src.messenger import message, print_matches, show_mectrics, help_
 from src.disc_manager import isdirectory, isfile, get_listdir, loadfile, get_filename
 
-METRICS = {
-  "lines_matches_count": 0,
-  "files_count": 0,
-  "skip_count": 0,
-  "start_time": time()
-}
-
-def discoverer(regex, path, level=0):
+def discoverer(regex, path, level=0, metric:Metric = None):
   """
   Scout the current path and fire the 'regex' into files
   """
@@ -24,7 +18,7 @@ def discoverer(regex, path, level=0):
       Increment files metrics
       """
       if isfile(current_path):
-        metric_increment("files_count")
+        metric.increment("files_count")
       """
       Fire the all filter agurments
 
@@ -35,19 +29,19 @@ def discoverer(regex, path, level=0):
         """
         Increment 'skip' metric
         """
-        metric_increment("skip_count")
+        metric.increment("skip_count")
         continue
 
       """
       Release the Kraken
       """
       if isfile(current_path):
-        search_in_file(regex, current_path)
+        search_in_file(regex, current_path, metric)
 
       elif isdirectory(current_path) and params.isrecursive() and level < recursive_level:
-        discoverer(regex, current_path, level + 1)
+        discoverer(regex, current_path, level + 1, metric)
 
-def search_in_file (regex, path):
+def search_in_file (regex, path, metric: Metric = None):
   """
   Search the term with 'regex' in file of 'path'
   """
@@ -59,7 +53,7 @@ def search_in_file (regex, path):
       """
       Increment 'matches' metric
       """
-      metric_increment("lines_matches_count")
+      metric.increment("lines_matches_count")
       """
       print the path of file
       """
@@ -165,13 +159,6 @@ def you_shall_not_pass(current_path):
       return True
   return False
 
-def metric_increment(name):
-  """
-  Just increment the metrics according name parameter
-  """
-  if name in METRICS:
-    METRICS[name] += 1
-
 def run():
   """
   Fire the chaos
@@ -190,10 +177,10 @@ def run():
     if params.israw():
       term = re.escape(term)
 
+    mtrc = Metric()
     regex_term = re.compile(term)
-    path = params.get_path()
-    discoverer(regex_term, path)
-    show_mectrics(METRICS)
+    discoverer(regex_term, params.get_path(), 0, mtrc)
+    show_mectrics(mtrc)
 
   else:
     message("[RED]you need to enter a search term[ENDC]")

@@ -64,17 +64,17 @@ def compresstext(text, length):
 
   return text
 
-def show_mectrics(metrics):
+def show_mectrics(metric):
   """
   Print the metrics of time execution, matches and skip on the screen
   """
   if isquiet() == False:
     message("[RED]---[ENDC]")
     s = " [RED]|[ENDC] " # it's just a separator
-    time_ = "[GREEN][BOLD]{:.3f}[ENDC] seconds".format(time.time() - metrics["start_time"])
-    files = "[GREEN][BOLD]{}[ENDC] files".format(metrics["files_count"])
-    lines = "[GREEN][BOLD]{}[ENDC] lines matches".format(metrics["lines_matches_count"])
-    skip = "[GREEN][BOLD]{}[ENDC] skip".format(metrics["skip_count"])
+    time_ = "[GREEN][BOLD]{:.3f}[ENDC] seconds".format(time.time() - metric.get_metric("start_time", 0))
+    files = "[GREEN][BOLD]{}[ENDC] files".format(metric.get_metric("files_count"))
+    lines = "[GREEN][BOLD]{}[ENDC] lines matches".format(metric.get_metric("lines_matches_count"))
+    skip = "[GREEN][BOLD]{}[ENDC] skip".format(metric.get_metric("skip_count"))
     text = "{time_}{s}{file}{s}{line}{s}{skip}".format(s=s, time_=time_, file=files, line=lines, skip=skip)
 
     message(text)
