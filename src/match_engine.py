@@ -86,4 +86,4 @@ def run():
 
   else:
     message("[RED]you need to enter a search term[ENDC]")
-    message("[GREEN]finder by=[YELLOW]<term>[ENDC]")
+    message("[GREEN]finder [YELLOW]--help[ENDC]")
