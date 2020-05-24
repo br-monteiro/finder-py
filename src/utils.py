@@ -1,6 +1,6 @@
 import re
 
-def parse_int(value, fallback=0):
+def parseint(value, fallback=0):
   """
   Convert a string number to integer
   """
@@ -12,7 +12,7 @@ def parse_int(value, fallback=0):
   except ValueError:
     return fallback
 
-def normalize_str(value: str):
+def normalizestr(value: str):
   """
   Just remove unnecessary characters from value
   """
@@ -21,7 +21,7 @@ def normalize_str(value: str):
 
   return re.sub(r"\n", lambda m: "", value)
 
-def extract_extension(path: str):
+def get_ext(path: str):
   """
   Returns the file extension, otherwise return None
   """
@@ -32,7 +32,7 @@ def extract_extension(path: str):
   matches = value_regex.search(path)
   return matches.group(1) if matches else None
 
-def pattern_test(pattern: str, value: str):
+def re_test(pattern: str, value: str):
   """
   Just fire the pattern in value and return a boolean
   """

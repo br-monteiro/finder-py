@@ -1,10 +1,10 @@
 import re
 import time
 from src.colors import get_colors
-from src.utils import parse_int
-from src.params import is_quiet
+from src.utils import parseint
+from src.params import isquiet
 
-def show_message(text: str):
+def message(text: str):
   """
   Prints the messages on screen
   """
@@ -20,8 +20,8 @@ def print_matches(regex, line_number, line_content):
   """
   Prints the line of file with matches
   """
-  text = highlight(regex, process_text(regex, line_content))
-  show_message("[YELLOW][BOLD]" + line_number + "[ENDC] " + text)
+  text = highlight(regex, processtext(regex, line_content))
+  message("[YELLOW][BOLD]" + line_number + "[ENDC] " + text)
 
 def highlight(regex, value):
   """
@@ -29,7 +29,7 @@ def highlight(regex, value):
   """
   return regex.sub(lambda m: "[BG-GREEN]" + m.group(0) + "[ENDC]", value)
 
-def process_text(regex, value):
+def processtext(regex, value):
   """
   Process the text to pretty presentation
   """
@@ -44,19 +44,19 @@ def process_text(regex, value):
     elif matches_length >= 3:
       wrap_length = 5
 
-    wrapper_text = list(map(lambda text: compress_text(text, wrap_length), regex.split(value)))
+    wrapper_text = list(map(lambda text: compresstext(text, wrap_length), regex.split(value)))
     return regex.search(value).group(0).join(wrapper_text)
 
   return value
 
-def compress_text(text, length):
+def compresstext(text, length):
   """
   Compress long text to show on the screen
   """
   if type(text) != str:
     return text
 
-  if len(text) > parse_int(length):
+  if len(text) > parseint(length):
     compiled_regex = re.compile("(.{" + str(length) + "}?)$")
     match = compiled_regex.search(text)
     if match:
@@ -64,27 +64,28 @@ def compress_text(text, length):
 
   return text
 
-def show_mectrics(metrics):
+def show_mectrics(metric):
   """
   Print the metrics of time execution, matches and skip on the screen
   """
-  if is_quiet() == False:
-    show_message("[RED]---[ENDC]")
+  if isquiet() == False:
+    message("[RED]---[ENDC]")
     s = " [RED]|[ENDC] " # it's just a separator
-    process_time = "[GREEN][BOLD]{:.3f}".format(time.time() - metrics["start_time"]) + "[ENDC] seconds"
-    files_count = "[GREEN][BOLD]" + str(metrics["files_count"]) + "[ENDC] files"
-    lines_matches_count = "[GREEN][BOLD]" + str(metrics["lines_matches_count"]) + "[ENDC] lines matches"
-    skip_count = "[GREEN][BOLD]" + str(metrics["skip_count"]) + "[ENDC] skip"
+    time_ = "[GREEN][BOLD]{:.3f}[ENDC] seconds".format(time.time() - metric.get_metric("start_time", 0))
+    files = "[GREEN][BOLD]{}[ENDC] files".format(metric.get_metric("files_count"))
+    lines = "[GREEN][BOLD]{}[ENDC] lines matches".format(metric.get_metric("lines_matches_count"))
+    skip = "[GREEN][BOLD]{}[ENDC] skip".format(metric.get_metric("skip_count"))
+    text = "{time_}{s}{file}{s}{line}{s}{skip}".format(s=s, time_=time_, file=files, line=lines, skip=skip)
 
-    show_message(process_time + s + files_count + s + lines_matches_count + s + skip_count)
+    message(text)
 
-def show_help():
+def help_():
   """
   Shows the commands descriptions
   """
   from os import path
-  from src.disc_manager import load_file
+  from src.disc_manager import loadfile
 
-  file = load_file(path.dirname(__file__) + "/../help_splash.txt")
+  file = loadfile(path.dirname(__file__) + "/../help_splash.txt")
   content = "\n".join(file) if file else ""
-  show_message(content)
+  message(content)

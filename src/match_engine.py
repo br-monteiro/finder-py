@@ -1,33 +1,25 @@
 import re
 import src.params as params
+from src.metrict import Metric
 from time import time
-from src.utils import extract_extension, pattern_test
-from src.messenger import show_message, print_matches, show_mectrics, show_help
-from src.disc_manager import is_directory, is_file, get_list_dir, load_file, get_file_name_from
+from src.messenger import message, print_matches, show_mectrics, help_
+from src.disc_manager import isdirectory, isfile, get_listdir, loadfile
+from src.skiprules import you_shall_not_pass
 
-METRICS = {
-  "lines_matches_count": 0,
-  "files_count": 0,
-  "skip_count": 0,
-  "start_time": time()
-}
-
-def discoverer(regex, path, level=0):
+def discoverer(regex, path, level=0, metric:Metric = None):
   """
   Scout the current path and fire the 'regex' into files
   """
-  if is_directory(path):
+  if isdirectory(path):
     recursive_level = params.get_recursive_level()
 
-    for current_path in get_list_dir(path):
+    for current_path in get_listdir(path):
       """
       Increment files metrics
       """
-      if is_file(current_path):
-        metric_increment("files_count")
+      if isfile(current_path):
+        metric.increment("files_count")
       """
-      Fire the all filter agurments
-
       A wizard is never late, nor is he early,
       He arrives precisely when he means to! - Gandalf
       """
@@ -35,23 +27,23 @@ def discoverer(regex, path, level=0):
         """
         Increment 'skip' metric
         """
-        metric_increment("skip_count")
+        metric.increment("skip_count")
         continue
 
       """
       Release the Kraken
       """
-      if is_file(current_path):
-        search_in_file(regex, current_path)
+      if isfile(current_path):
+        search_in_file(regex, current_path, metric)
 
-      elif is_directory(current_path) and params.is_recursive() and level < recursive_level:
-        discoverer(regex, current_path, level + 1)
+      elif isdirectory(current_path) and params.isrecursive() and level < recursive_level:
+        discoverer(regex, current_path, level + 1, metric)
 
-def search_in_file (regex, path):
+def search_in_file (regex, path, metric: Metric = None):
   """
   Search the term with 'regex' in file of 'path'
   """
-  file_content = load_file(path)
+  file_content = loadfile(path)
   current_path = None
 
   for (index, line) in enumerate(file_content):
@@ -59,126 +51,23 @@ def search_in_file (regex, path):
       """
       Increment 'matches' metric
       """
-      metric_increment("lines_matches_count")
+      metric.increment("lines_matches_count")
       """
       print the path of file
       """
       if current_path != path:
         current_path = path
-        show_message("[GREEN]" + path + "[ENDC]")
+        message("[GREEN]" + path + "[ENDC]")
 
       print_matches(regex, str(index + 1), line)
-
-def is_path_match(path):
-  """
-  Checks if a value was entered in the argument 'path-match'
-  In case of success, fire the pattern in current 'path'
-  """
-  path_match = params.get_path_match()
-
-  if not path_match:
-    return True
-
-  return pattern_test(path_match, path)
-
-def is_path_dont_match(path):
-  """
-  Checks if a value was entered in the argument 'path-dont-match'
-  In case of success, fire the pattern in current 'path'
-  """
-  path_dont_match = params.get_path_dont_match()
-
-  if not path_dont_match:
-    return False
-
-  return pattern_test(path_dont_match, path)
-
-def is_file_match(path):
-  """
-  Checks if a value was entered in the argument 'file-match'
-  In case of success, fire the pattern in current 'path'
-  """
-  file_match = params.get_file_match()
-
-  if not file_match:
-    return True
-
-  return pattern_test(file_match, path)
-
-def is_file_dont_match(path):
-  """
-  Checks if a value was entered in the argument 'file-dont-match'
-  In case of success, fire the pattern in current 'path'
-  """
-  file_dont_match = params.get_file_dont_match()
-
-  if not file_dont_match:
-    return False
-
-  return pattern_test(file_dont_match, path)
-
-def you_shall_not_pass(current_path):
-  """
-  Check the value of 'path-dont-match'
-  If the path is not allowed, then continue the loop
-  """
-  if is_path_dont_match(current_path):
-    return True
-
-  """
-  Check the value of 'path-match'
-  If the path is not allowed, then continue the loop
-  """
-  if is_path_match(current_path) == False:
-    return True
-
-  if is_file(current_path):
-    file_name = get_file_name_from(current_path)
-    file_extension = extract_extension(current_path)
-
-    """
-    Check the value of 'file-dont-match'
-    If the path is not allowed, then continue the loop
-    """
-    if is_file_dont_match(file_name):
-      return True
-
-    """
-    Check the value of 'file-match'
-    If the path is not allowed, then continue the loop
-    """
-    if is_file_match(file_name) == False:
-      return True
-
-    """
-    Check if the file has a allowed extension
-    """
-    only_extension = params.get_only_extensions()
-    if len(only_extension) and file_extension not in only_extension:
-      return True
-
-    """
-    Check if the file has a allowed extension
-    """
-    except_extension = params.get_except_extensions()
-    if len(except_extension) and file_extension in except_extension:
-      return True
-  return False
-
-def metric_increment(name):
-  """
-  Just increment the metrics according name parameter
-  """
-  if name in METRICS:
-    METRICS[name] += 1
 
 def run():
   """
   Fire the chaos
   From this point, you're lost
   """
-  if params.is_help():
-    show_help()
+  if params.ishelp():
+    help_()
     return # just stop the execution
 
   term = params.get_by()
@@ -187,14 +76,14 @@ def run():
     """
     Escape the search term when 'raw' argument is informed
     """
-    if params.is_raw():
+    if params.israw():
       term = re.escape(term)
 
+    mtrc = Metric()
     regex_term = re.compile(term)
-    path = params.get_path()
-    discoverer(regex_term, path)
-    show_mectrics(METRICS)
+    discoverer(regex_term, params.get_path(), 0, mtrc)
+    show_mectrics(mtrc)
 
   else:
-    show_message("[RED]you need to enter a search term[ENDC]")
-    show_message("[GREEN]finder by=[YELLOW]<term>[ENDC]")
+    message("[RED]you need to enter a search term[ENDC]")
+    message("[GREEN]finder [YELLOW]--help[ENDC]")

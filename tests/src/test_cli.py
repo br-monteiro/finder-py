@@ -4,7 +4,7 @@ import src.cli as cli
 class TestCli(unittest.TestCase):
 
   def setUp(self):
-    cli.arguments_map = cli.process_arguments([
+    arguments = cli.process_arguments([
       "test1='value =2'",
       "Test1='whatever",
       "test2==value",
@@ -18,6 +18,7 @@ class TestCli(unittest.TestCase):
       "-Test4",
       "-1test",
     ])
+    cli.set_arguments(arguments)
 
   def tearDown(self):
     cli.clear_arguments()
@@ -58,6 +59,7 @@ class TestCli(unittest.TestCase):
     cli.clear_arguments()
     self.assertIsNone(cli.get_argument("test-a"))
     self.assertIsNone(cli.get_argument("-test-b"))
+
 
 if __name__ == "__main__":
   unittest.main()
