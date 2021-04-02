@@ -18,7 +18,9 @@ class TestDiscManager(unittest.TestCase):
             self.path + "/one-dir"
         ]
 
-        self.assertEqual(expected, disc_manager.get_listdir(self.path))
+        result = disc_manager.get_listdir(self.path)
+
+        self.assertEqual(expected.sort(), result.sort())
         self.assertEqual([], disc_manager.get_listdir(self.path + "/whatever"))
         self.assertEqual([], disc_manager.get_listdir(self.path + "/test.txt"))
         self.assertEqual([], disc_manager.get_listdir("/whatever"))
