@@ -30,7 +30,7 @@ O único comando obrigatório é o `by=<termo>`.
 finder by=texto
 ```
 
-É possível melhorar o resultado de busca passando alguns argumentos especials para o `CLI`.
+É possível melhorar o resultado de busca passando alguns argumentos especiais para o `CLI`.
 
 >__IMPORTANTE__: A busca será realizada em arquivos e diretórios com permissão de leitura. Caso contrário, o arquivo/diretório será ignorado no processo.
 
@@ -43,17 +43,17 @@ finder by=texto
 | **path**             | String        | path=/home/edsonmonteiro/                                            | Informa o path em que o `CLI` realizará busca.<br>Por padrão, a busca será realizada no diretório atual.                                                                                                       |
 | **-recursive**<br>**-r** | ---           | -recursive<br>-r                                                     | Informa ao `CLI` para realizar a busca no diretório atual<br>e subdiretórios.<br>Por padrão, o nível de recursividade é 3.                                                                                              |
 | **rl**<br><br>**recursive-level**  | Integer       | rl=4<br><br>recursive-level=5                                                    | Altera o nível máximo de subdiretórios em que o `CLI` realizará a busca.                                                                                                                                    |
-| **fm**<br><br>**file-match**       | RegEx         | fm="template-*"<br><br>file-match=\\\d-abc                                                   | Informa ao `CLI` para realizar a busca do termo<br>apenas em arquivos onde a RegEx é satisfeita.                                                                                                               |
-| **fdm**<br><br>**file-dont-match**  | RegEx         | fdm=".*min\\\\.js"<br><br>file-match=\\\d-abc                                                   | Informa ao `CLI` para **ignorar** a busca do termo<br>apenas em arquivos quando a RegEx for satisfeita.                                                                                                            |
-| **pm**<br><br>**path-match**       | RegEx         | pm="src\|public"<br><br>path-match=\\\d-abc                                                   | Informa ao `CLI` para realizar a busca do termo apenas<br>quando a RegEx for satisfeita.                                                                                                                       |
-| **pdm**<br><br>**path-dont-match**  | RegEx         | pdm="node_modules\|dist"<br><br>path-dont-match=node_modules<br>path-dont-match="node_modules\|dist" | Informa ao `CLI` para ignorar a busca do termo quando<br>a RegEx for satisfeita.                                                                                                                                |
+| **fm**<br><br>**file-match**       | RegEx         | fm="template-*"<br><br>file-match=\\\d-abc                                                   | Informa ao `CLI` para realizar a busca do termo<br>apenas em arquivos onde a RegEx é satisfeita usando como base o nome do arquivo.                                                                                                               |
+| **fdm**<br><br>**file-dont-match**  | RegEx         | fdm=".*min\\\\.js"<br><br>file-match=\\\d-abc                                                   | Informa ao `CLI` para **ignorar** a busca do termo<br>apenas em arquivos que a RegEx for satisfeita usando como base o nome do arquivo.                                                                                                            |
+| **pm**<br><br>**path-match**       | RegEx         | pm="src\|public"<br><br>path-match=\\\d-abc                                                   | Informa ao `CLI` para realizar a busca do termo apenas<br>quando a RegEx for satisfeita usando como base o path completo do arquivo/diretório.                                                                                                                       |
+| **pdm**<br><br>**path-dont-match**  | RegEx         | pdm="node_modules\|dist"<br><br>path-dont-match=node_modules<br>path-dont-match="node_modules\|dist" | Informa ao `CLI` para **ignorar** a busca do termo quando<br>a RegEx for satisfeita usando como base o path completo do arquivo/diretório.                                                                                                                                |
 | **oe**<br><br>**only-extension**   | String        | oe=php,js<br><br>only-extension=js<br>only-extension=js,py                            | Informa ao `CLI` para realizar a busca apenas em arquivos<br>com a extensão informada.                                                                                                                          |
 | **ee**<br><br>**except-extension** | String        | ee=json,md<br><br>except-extension=md<br>except-extension=json,java                    | Informa ao `CLI` para **ignorar** a busca em arquivos com a<br>extensão informada.                                                                                                                                  |
 | **-quiet**<br>**-q**     | ---           | -quiet<br>-q                                                         | Informa ao `CLI` para não exibir as informações de **tempo de execução, arquivos consultados, quantidade de linhas com o termo de busca** e **quantidade de arquivos ou diretórios pulados** no processo. |
 | **--help**     | ---           | --help                                                         | Mostra uma descrição dos comandos suportados e alguns exemplos no terminal. |
 
 > A principal diferença entre [**fm, fdm, file-match, file-dont-match**] e [**pm, pdm, path-match, path-dont-match**] é que
-> **file**-* cosidera apenas arquivos e **path**-* considera o path completo do arquivo
+> **file**-* cosidera apenas o nome dos arquivos e **path**-* considera o path completo do arquivo ou diretório
 
 ### Tests
 Para rodar os tests, basta executar o comando =)
