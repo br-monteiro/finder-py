@@ -1,4 +1,4 @@
-# Finder.py
+# Finder.py [![Unit Tests](https://github.com/br-monteiro/finder-py/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/br-monteiro/finder-py/actions/workflows/test.yml)
 Um simples `CLI` para ajudar a encontrar aquele maldito texto que só Deus sabe onde está =)<br>
 Esta ferramenta foi desenvolvida com Python3, Coca-Cola e Cup Noodles
 
